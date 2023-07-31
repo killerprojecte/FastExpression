@@ -3,7 +3,9 @@ package dev.rgbmc.expression.managers;
 import dev.rgbmc.expression.FastExpression;
 import dev.rgbmc.expression.functions.CallableFunction;
 import dev.rgbmc.expression.functions.FastFunction;
+import dev.rgbmc.expression.functions.FunctionParameter;
 import dev.rgbmc.expression.functions.FunctionResult;
+import dev.rgbmc.expression.parameters.StringParameter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,12 +17,13 @@ import java.util.regex.Pattern;
 public class FunctionManager {
     private final Map<String, FastFunction> functions;
     private final FastExpression instance;
+
     public FunctionManager(FastExpression instance) {
         functions = new HashMap<>();
         this.instance = instance;
     }
 
-    public FunctionResult call(String registerName, String parameter) {
+    public FunctionResult call(String registerName, FunctionParameter parameter) {
         return get(registerName).call(parameter);
     }
 
@@ -68,7 +71,7 @@ public class FunctionManager {
             Matcher parameterMatcher = parameterPattern.matcher(functionExpression);
             if (!parameterMatcher.find()) continue;
             String parameter = parameterMatcher.group(1);
-            callableFunctions.add(new CallableFunction(get(functionName), parameter));
+            callableFunctions.add(new CallableFunction(get(functionName), new StringParameter(parameter)));
         }
         return callableFunctions;
     }

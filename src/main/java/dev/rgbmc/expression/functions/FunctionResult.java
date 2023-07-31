@@ -1,7 +1,21 @@
 package dev.rgbmc.expression.functions;
 
-public enum FunctionResult {
-    SUCCESS,
-    FAILURE,
-    ERROR
+public abstract class FunctionResult {
+    public enum Status {
+        SUCCESS,
+        FAILURE,
+        ERROR
+    }
+
+    public static class DefaultResult extends FunctionResult {
+        private final Status status;
+
+        public DefaultResult(Status status) {
+            this.status = status;
+        }
+
+        public Status getStatus() {
+            return status;
+        }
+    }
 }

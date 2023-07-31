@@ -11,7 +11,7 @@ public class TestExpression {
         expression.getFunctionManager().register(new CompareFunction(), "c", "check");
         for (CallableFunction callableFunction : expression.getFunctionManager()
                 .parseExpression("test(Just A Test) t(Another Test) compare(Test == Test2)")) {
-            if (callableFunction.callFunction() != FunctionResult.SUCCESS) {
+            if (((FunctionResult.DefaultResult) callableFunction.callFunction()).getStatus() != FunctionResult.Status.SUCCESS) {
                 System.err.println("Return error value");
                 break;
             }

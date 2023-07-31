@@ -1,11 +1,14 @@
 package dev.rgbmc.expression.test;
 
 import dev.rgbmc.expression.functions.FastFunction;
+import dev.rgbmc.expression.functions.FunctionParameter;
 import dev.rgbmc.expression.functions.FunctionResult;
+import dev.rgbmc.expression.parameters.StringParameter;
 
 public class CompareFunction implements FastFunction {
     @Override
-    public FunctionResult call(String parameter) {
+    public FunctionResult call(FunctionParameter functionParameter) {
+        String parameter = ((StringParameter) functionParameter).getString();
         if (parameter.contains(">")) {
             if (parameter.contains(">=")) {
                 parameter = parameter
@@ -22,9 +25,9 @@ public class CompareFunction implements FastFunction {
                     status = point >= point2;
                 }
                 if (status) {
-                    return FunctionResult.SUCCESS;
+                    return new FunctionResult.DefaultResult(FunctionResult.Status.SUCCESS);
                 } else {
-                    return FunctionResult.FAILURE;
+                    return new FunctionResult.DefaultResult(FunctionResult.Status.FAILURE);
                 }
             } else {
                 parameter = parameter
@@ -41,9 +44,9 @@ public class CompareFunction implements FastFunction {
                     status = point > point2;
                 }
                 if (status) {
-                    return FunctionResult.SUCCESS;
+                    return new FunctionResult.DefaultResult(FunctionResult.Status.SUCCESS);
                 } else {
-                    return FunctionResult.FAILURE;
+                    return new FunctionResult.DefaultResult(FunctionResult.Status.FAILURE);
                 }
             }
         } else if (parameter.contains("<")) {
@@ -62,9 +65,9 @@ public class CompareFunction implements FastFunction {
                     status = point <= point2;
                 }
                 if (status) {
-                    return FunctionResult.SUCCESS;
+                    return new FunctionResult.DefaultResult(FunctionResult.Status.SUCCESS);
                 } else {
-                    return FunctionResult.FAILURE;
+                    return new FunctionResult.DefaultResult(FunctionResult.Status.FAILURE);
                 }
             } else {
                 parameter = parameter
@@ -81,9 +84,9 @@ public class CompareFunction implements FastFunction {
                     status = point < point2;
                 }
                 if (status) {
-                    return FunctionResult.SUCCESS;
+                    return new FunctionResult.DefaultResult(FunctionResult.Status.SUCCESS);
                 } else {
-                    return FunctionResult.FAILURE;
+                    return new FunctionResult.DefaultResult(FunctionResult.Status.FAILURE);
                 }
             }
         } else if (parameter.contains("==")) {
@@ -99,12 +102,12 @@ public class CompareFunction implements FastFunction {
                 status = split[0].equals(split[1]);
             }
             if (status) {
-                return FunctionResult.SUCCESS;
+                return new FunctionResult.DefaultResult(FunctionResult.Status.SUCCESS);
             } else {
-                return FunctionResult.FAILURE;
+                return new FunctionResult.DefaultResult(FunctionResult.Status.FAILURE);
             }
         }
-        return FunctionResult.ERROR;
+        return new FunctionResult.DefaultResult(FunctionResult.Status.ERROR);
     }
 
     @Override
