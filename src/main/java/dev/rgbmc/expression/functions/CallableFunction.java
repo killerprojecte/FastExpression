@@ -2,7 +2,7 @@ package dev.rgbmc.expression.functions;
 
 public class CallableFunction {
     private final FastFunction function;
-    private final FunctionParameter parameter;
+    private FunctionParameter parameter;
 
     public CallableFunction(FastFunction function, FunctionParameter parameter) {
         this.function = function;
@@ -15,6 +15,10 @@ public class CallableFunction {
 
     public FunctionParameter getParameter() {
         return parameter;
+    }
+
+    public void setParameter(FunctionParameter parameter) {
+        this.parameter = parameter;
     }
 
     public FunctionResult callFunction() {
