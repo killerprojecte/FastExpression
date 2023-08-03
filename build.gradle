@@ -50,3 +50,11 @@ def String id() {
     println("Commit ID: " + cid)
     return cid;
 }
+
+compileJava {
+    options.encoding = "UTF-8"
+    if (JavaVersion.current().isJava10Compatible()) {
+        options.release = 8
+        println("Java 8 Compatible Enabled")
+    }
+}
