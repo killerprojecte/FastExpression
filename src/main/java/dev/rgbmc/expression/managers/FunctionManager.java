@@ -6,7 +6,6 @@ import dev.rgbmc.expression.functions.FastFunction;
 import dev.rgbmc.expression.functions.FunctionParameter;
 import dev.rgbmc.expression.functions.FunctionResult;
 import dev.rgbmc.expression.parameters.StringParameter;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -59,18 +58,11 @@ public class FunctionManager {
 
     public List<CallableFunction> parseExpression(String expression) {
         List<CallableFunction> callableFunctions = new ArrayList<>();
-        Pattern pattern = Pattern.compile("(\\w+\\((?:[^()]*|\\((?:[^()]*|\\([^()]*\\))*\\))*\\))");
+        Pattern pattern = Pattern.compile("([\\w\\p{L}]+)\\(((?:[^()]*|\\((?:[^()]*|\\([^()]*\\))*\\))*)\\)");
         Matcher matcher = pattern.matcher(expression);
         while (matcher.find()) {
-            String functionExpression = matcher.group(0);
-            Pattern functionPattern = Pattern.compile("(\\w+)\\((?:[^()]*|\\((?:[^()]*|\\([^()]*\\))*\\))*\\)");
-            Pattern parameterPattern = Pattern.compile("\\w+\\(((?:[^()]*|\\((?:[^()]*|\\([^()]*\\))*\\))*)\\)");
-            Matcher functionMatcher = functionPattern.matcher(functionExpression);
-            if (!functionMatcher.find()) continue;
-            String functionName = functionMatcher.group(1);
-            Matcher parameterMatcher = parameterPattern.matcher(functionExpression);
-            if (!parameterMatcher.find()) continue;
-            String parameter = parameterMatcher.group(1);
+            String functionName = matcher.group(1);
+            String parameter = matcher.group(2);
             callableFunctions.add(new CallableFunction(get(functionName), new StringParameter(parameter)));
         }
         return callableFunctions;

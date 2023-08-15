@@ -24,4 +24,8 @@ public class AliasesManager {
     public void registerAliases(String realName, String... aliases) {
         this.aliases.put(realName, Arrays.asList(aliases));
     }
+
+    public void addAlias(String realName, String alias) {
+        this.aliases.get(realName).add(alias);
+    }
 }
