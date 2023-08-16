@@ -1,9 +1,6 @@
 package dev.rgbmc.expression.managers;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class AliasesManager {
     private final Map<String, List<String>> aliases;
@@ -25,7 +22,24 @@ public class AliasesManager {
         this.aliases.put(realName, Arrays.asList(aliases));
     }
 
+    public boolean isRealName(String name) {
+        if (aliases.containsKey(name)) {
+            return true;
+        } else {
+            List<String> allAliases = new ArrayList<>();
+            for (Map.Entry<String, List<String>> entry : aliases.entrySet()) {
+                allAliases.addAll(entry.getValue());
+            }
+            if (allAliases.contains(name)) return true;
+        }
+        throw new IllegalArgumentException("Check real name with unknown value");
+    }
+
     public void addAlias(String realName, String alias) {
+        if (!aliases.containsKey(realName)) throw new IllegalArgumentException("Function " + realName + " not found or not registered");
+        if (aliases.get(realName).contains(alias)) {
+            throw new RuntimeException(new IllegalArgumentException("Duplicate registration alias: " + alias));
+        }
         this.aliases.get(realName).add(alias);
     }
 }
