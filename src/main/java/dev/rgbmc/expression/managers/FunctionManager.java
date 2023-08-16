@@ -67,4 +67,8 @@ public class FunctionManager {
         }
         return callableFunctions;
     }
+
+    public Map<String, FastFunction> getRegistry() {
+        return functions;
+    }
 }
