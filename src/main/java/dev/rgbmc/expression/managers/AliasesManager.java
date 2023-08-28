@@ -19,7 +19,7 @@ public class AliasesManager {
     }
 
     public void registerAliases(String realName, String... aliases) {
-        this.aliases.put(realName, Arrays.asList(aliases));
+        this.aliases.put(realName, new ArrayList<>(Arrays.asList(aliases)));
     }
 
     public boolean isRealName(String name) {
@@ -35,8 +35,8 @@ public class AliasesManager {
         throw new IllegalArgumentException("Check real name with unknown value");
     }
 
-    public void addAlias(String realName, String alias) {
-        if (!aliases.containsKey(realName)) throw new IllegalArgumentException("Function " + realName + " not found or not registered");
+    public void addAlias(String realName, String alias, FunctionManager functionManager) {
+        if (!functionManager.getRegistry().containsKey(realName)) throw new IllegalArgumentException("Function " + realName + " not found or not registered");
         if (aliases.get(realName).contains(alias)) {
             throw new RuntimeException(new IllegalArgumentException("Duplicate registration alias: " + alias));
         }
